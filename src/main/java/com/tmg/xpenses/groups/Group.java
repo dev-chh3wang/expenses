@@ -1,14 +1,15 @@
-package com.tmg.xpenses.model;
+package com.tmg.xpenses.groups;
 
-import jakarta.persistence.*;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-
+@Table(value = "group")
 public class Group {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKey
     private Integer id;
     private String name;
+
 
     public Group(Integer id, String name) {
         this.id = id;

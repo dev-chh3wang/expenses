@@ -35,3 +35,7 @@ build/
 
 ### Maven ###
 .mvn
+
+### AstraDb ###
+secureConnectAstra.zip
+astradb.secret.properties
