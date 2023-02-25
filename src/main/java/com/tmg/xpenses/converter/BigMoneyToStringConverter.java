@@ -1,12 +1,20 @@
 package com.tmg.xpenses.converter;
 
+import jakarta.persistence.AttributeConverter;
 import org.joda.money.BigMoney;
-import org.springframework.core.convert.converter.Converter;
+import org.joda.money.CurrencyUnit;
 
-public class BigMoneyToStringConverter implements Converter<BigMoney,Double> {
+import java.math.BigDecimal;
+
+public class BigMoneyToStringConverter implements AttributeConverter<BigMoney, BigDecimal> {
 
     @Override
-    public Double convert(BigMoney source) {
-        return source.toMoney().getAmount().doubleValue();
+    public BigDecimal convertToDatabaseColumn(BigMoney bigMoney) {
+        return bigMoney.getAmount();
+    }
+
+    @Override
+    public BigMoney convertToEntityAttribute(BigDecimal bigDecimal) {
+        return BigMoney.of(CurrencyUnit.EUR,bigDecimal);
     }
 }

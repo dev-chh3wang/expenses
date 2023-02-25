@@ -1,49 +1,80 @@
 package com.tmg.xpenses.users;
 
 
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
+import com.tmg.xpenses.groups.Group;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
-@Table(value = "users_by_group")
+@Entity
+@Table(name = "tbl_users")
 public class User implements Serializable {
 
-    @PrimaryKeyColumn(name = "id", type = PrimaryKeyType.CLUSTERED)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    @PrimaryKeyColumn(name = "group_id",type = PrimaryKeyType.PARTITIONED)
-    private Integer groupId;
+    private String email;
 
-    public User(Integer id, String name, Integer groupId) {
+    @OneToMany(mappedBy = "createdBy")
+    private List<Group> groups;
+
+    public User() {
+    }
+
+    public User(Integer id, String name, String email) {
         this.id = id;
         this.name = name;
-        this.groupId = groupId;
+        this.email = email;
+
     }
+
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public Integer getGroupId() {
-        return groupId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id) && name.equals(user.name) && email.equals(user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email);
     }
 }
