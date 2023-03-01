@@ -14,12 +14,15 @@ import java.util.Optional;
 public class GroupController {
 
 
-    @Autowired
+
     GroupService service;
-
+    UserService userService;
 
     @Autowired
-    UserService userService;
+    public GroupController(GroupService service, UserService userService) {
+        this.service = service;
+        this.userService = userService;
+    }
 
     @GetMapping(value = "get/{id}")
     public ResponseEntity<GroupDto> get(@PathVariable Integer id){

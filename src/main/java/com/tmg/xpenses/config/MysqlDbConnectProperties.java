@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 /**
- * maps astradb connection values from a "mysql.secret.properties" file.
+ * maps mysql connection values from a "mysql.secret.properties" file.
  */
 @Configuration
 @PropertySource("classpath:mysql.secret.properties")

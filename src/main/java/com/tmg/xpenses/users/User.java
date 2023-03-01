@@ -19,8 +19,11 @@ public class User implements Serializable {
     private String name;
     private String email;
 
-    @OneToMany(mappedBy = "createdBy")
+    @ManyToMany(mappedBy = "users")
     private List<Group> groups;
+
+    @OneToMany(mappedBy = "createdBy")
+    private List<Group> ownedGroups;
 
     public User() {
     }
@@ -63,6 +66,14 @@ public class User implements Serializable {
 
     public void setGroups(List<Group> groups) {
         this.groups = groups;
+    }
+
+    public List<Group> getOwnedGroups() {
+        return ownedGroups;
+    }
+
+    public void setOwnedGroups(List<Group> ownedGroups) {
+        this.ownedGroups = ownedGroups;
     }
 
     @Override

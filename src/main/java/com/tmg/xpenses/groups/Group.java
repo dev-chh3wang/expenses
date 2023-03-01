@@ -1,10 +1,9 @@
 package com.tmg.xpenses.groups;
 
 import com.tmg.xpenses.users.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,7 +14,18 @@ public class Group extends BaseEntity {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "created_by")
     private User createdBy;
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "group_users",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
 
     public Group() {
     }
@@ -47,6 +57,13 @@ public class Group extends BaseEntity {
         this.createdBy = createdBy;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     @Override
     public boolean equals(Object o) {
